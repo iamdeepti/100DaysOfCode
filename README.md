@@ -9,3 +9,6 @@ solved 4 coding problems.
 1) solved 3 coding problems from codeforces
 2) completed Task 2 of geo-clustering project 
 3) completed Task 3 of geo-clustering project
+
+# Day 3
+1) solved one question of graph from Interview Bit.
