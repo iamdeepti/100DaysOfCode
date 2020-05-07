@@ -17,3 +17,7 @@ solved 4 coding problems.
 
 ## Day 5
 1) Tried 3 coding problems based on DSA
+
+## Day 6
+1) Did some coding problems 
+2) half completed week 2 of Machine Learning Classification
