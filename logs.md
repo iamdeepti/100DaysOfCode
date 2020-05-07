@@ -16,4 +16,4 @@ solved 4 coding problems.
 2) completed the week -1 of Machine Learning Classification and retrieval
 
 ## Day 5
-1) Trid 3 coding problems based on DSA
+1) Tried 3 coding problems based on DSA
