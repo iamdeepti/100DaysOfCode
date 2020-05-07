@@ -2,4 +2,4 @@
 
 Committing to 100DaysOfCode Challenge officially.
 
-Daly logs can be found at (Daily-logs)[http://www.github.com/iamdeepti/100DaysOfCode/logs.md]
+Daly logs can be found at [Daily-logs][https://github.com/iamdeepti/100DaysOfCode/blob/master/logs.md]
