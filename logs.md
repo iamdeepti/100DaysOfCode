@@ -27,4 +27,4 @@ solved 4 coding problems.
 
 ## Day 8
 1) learnt and coded convex hull algorithm
-2) hosted a repo on heroku, and did some front-end designing
+2) hosted a repo on heroku, and did some front-end designing.
