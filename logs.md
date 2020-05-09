@@ -21,3 +21,10 @@ solved 4 coding problems.
 ## Day 6
 1) Did some coding problems 
 2) half completed week 2 of Machine Learning Classification
+
+## Day 7
+1) Did 2 coding problems 
+
+## Day 8
+1) learnt and coded convex hull algorithm
+2) hosted a repo on heroku, and did some front-end designing
