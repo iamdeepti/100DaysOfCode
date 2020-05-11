@@ -28,3 +28,7 @@ solved 4 coding problems.
 ## Day 8
 1) learnt and coded convex hull algorithm
 2) hosted a repo on heroku, and did some front-end designing.
+
+## Day 9
+1) Solved some problems based on Binary Indexed Trees
+2) Added some features to the team project, [ShECURE](https://github.com/iamdeepti/shecure)
