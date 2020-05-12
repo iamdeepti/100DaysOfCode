@@ -32,3 +32,7 @@ solved 4 coding problems.
 ## Day 9
 1) Solved some problems based on Binary Indexed Trees
 2) Added some features to the team project, [ShECURE](https://github.com/iamdeepti/shecure)
+
+## Day 10 
+1) Did 2 programming problems
+2) updated my portfolio website 
