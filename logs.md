@@ -40,3 +40,7 @@ solved 4 coding problems.
 ## Day 11-12 (May 13-14th, 2020)
 1) Solved 8 problems, 4 each day
 2) worked on my portfolio.
+
+## Day 13-14 (May 15-16,2020)
+1) Solved 3 coding problems.
+2) learnt digit dp
