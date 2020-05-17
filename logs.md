@@ -44,3 +44,6 @@ solved 4 coding problems.
 ## Day 13-14 (May 15-16,2020)
 1) Solved 3 coding problems.
 2) learnt digit dp
+
+## Day 15 (May 17, 2020)
+1)Did 3 questions from educational round 82 of codeforces.
