@@ -47,3 +47,6 @@ solved 4 coding problems.
 
 ## Day 15 (May 17, 2020)
 1)Did 3 questions from educational round 82 of codeforces.
+
+## Day 18 (May 18, 2020)
+1) Attempted problem D of educational round 82 of codeforces.
