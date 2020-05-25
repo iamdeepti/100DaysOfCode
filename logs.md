@@ -53,3 +53,9 @@ solved 4 coding problems.
 
 ## Day 17 (May 20,2020)
 1) Did ordered set problems using BIT tree. 
+
+## Day 18 (May 22,2020)
+1) Did Kquery problem using BIT tree
+
+## Day 19 (May 24,2020)
+1) solved 5 problems of round 643 (div-3)
