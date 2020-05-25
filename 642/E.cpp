@@ -11,7 +11,8 @@ int main()
         cin>>n>>k;
         string s;
         cin>>s;
-        vi dp(k);
+        //vi dp(k);
+        // cout<<s<<"lol"<<endl;
         int tot = count(s.begin(),s.end(),'1');
         // for(int i=0;i<n;i++)
         // {
@@ -29,14 +30,15 @@ int main()
         for(int i=0;i<k;i++)
         {
             int curr = 0,ans= 0;
-            for(int j=i;j<n;j+=i)
+            // cout<<i<<endl;
+            for(int j=i;j<n;j+=k)
             {
                 int p = (s[j]=='1')?1:-1;
                 curr = max(curr+p,0);
                 ans = max(ans,curr);
             }
             res = min(res,tot-ans);
-            cout<<"here"<<endl;
+            // cout<<"here"<<endl;
         }
         cout<<res<<endl;
     }
