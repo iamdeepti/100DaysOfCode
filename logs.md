@@ -59,3 +59,10 @@ solved 4 coding problems.
 
 ## Day 19 (May 24,2020)
 1) solved 5 problems of round 643 (div-3)
+
+## Day 20 (May 25,2020)
+1) solved 2 problems (F) of div-3
+2) did virtual contest - 3 problems
+
+## Day 21 (May 26,2020)
+1) gave 645 div-2 - solved 2 problems
