@@ -66,3 +66,6 @@ solved 4 coding problems.
 
 ## Day 21 (May 26,2020)
 1) gave 645 div-2 - solved 2 problems
+
+## Day 22 (May 27,2020)
+1) solved problem C, problem D-partially
