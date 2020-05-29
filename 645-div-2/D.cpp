@@ -8,11 +8,16 @@ int main()
     // int t;cin>>t;
     // while(t--)
     {
-        int n,x;
+        int n;
+        ll x;
         cin>>n>>x;
-        vi a(n);
+        vector<ll> a(2*n);
         for(int i=0;i<n;i++)
+        {    
             cin>>a[i];
+            a[n+i] = a[i];
+        }
+        n = 2*n;
         vector<ll> c ={0},d={0};
         for(int i=0;i<n;i++)
         {
@@ -20,18 +25,18 @@ int main()
         }
         for(int i=0;i<n;i++)
         {
-            d.pb(d.back()+1ll*a[i]*(a[i]-1)/2);
+            d.pb(d.back()+(a[i]*(a[i]+1))/2);
         }
-        ll ans = 0;
+        ll ans = INT_MIN;
         for(int i=0;i<n;i++)
         {
             if(c[i+1]>=x){
                 int z = upper_bound(c.begin(),c.end(),c[i+1]-x)-c.begin();
-                int days = d[i+1]-d[z];
-                ll curr = c[i+1]-c[z];
+                ll days = c[i+1]-c[z];
+                ll curr = d[i+1]-d[z];
                 int too = x-days;
-                curr += (a[z-1]*(a[z-1]-1))/2;
-                curr -= ((a[z-1]-too)*(a[z-1]-too-1)/2);
+                curr += (a[z-1]*(a[z-1]+1))/2;
+                curr -= ((a[z-1]-too)*(a[z-1]-too+1))/2;
                 ans = max(curr,ans);
             }
         }
