@@ -72,3 +72,6 @@ solved 4 coding problems.
 
 ## Day 23 (May 28,2020)
 1) Tried 4 problems of educational round 88, solved 2 fully.
+
+## Day 24 (May 29, 2020)
+1) Did one hard coding problem today.
