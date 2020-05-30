@@ -1,21 +1,27 @@
 #include<bits/stdc++.h>
 using namespace std;
+#define forn(i,n) for(int i=0;i<n;i++)
+typedef long long ll;
+const int inf = 1e9;
 int main()
 {
     int n;
     cin>>n;
-    vector<int> a(n),suff(n),pref(n);
-    for(int i=0;i<n;i++)
+    vector<int> a(n);
+    forn(i,n)
         cin>>a[i];
-    suff[n-1]=0;
-    pref[0]=0;
-    for(int i=n-2;i>=0;i--)
+    ll ans = 0;
+    forn(mx,31)
     {
-        pref[i] = max(a[i+1],a[i+1]+pref[i+1]);
+        ll curr = 0,best=0;
+        forn(i,n)
+        {
+            ll val = (a[i]>mx)?-inf:a[i];
+            curr += val;
+            best = min(best,curr);
+            ans = max(ans,curr-mx-best);
+            // cout<<curr<<" "<<best<<" "<<ans<<" "<<mx<<endl;
+        }
     }
-    for(int i=1;i<n;i++)
-    {
-        suff[i] = max(a[i-1],a[i-1]+suff[i-1]);
-    }
-    
+    cout<<ans<<endl;
 }
