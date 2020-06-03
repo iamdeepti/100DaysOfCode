@@ -9,26 +9,13 @@ void solve()
             cout<<"NO"<<endl;
             return;    
         }
-        vector<vi> A(n);
+        vector<vi> A(n,vi(m));
+        // Evenly distribute 1's now
+        int j=0;
         for(int i=0;i<n;i++)
         {
-            A[i].resize(m);
-        }
-        vi c(n), r(n);
-        for(int i=0;i<n;i++)
-        {
-            int j=0;
-            while(j<m && c[j]==b)
-            {    j++;
-            }
-            int k=a;
-            while(k-- && j<m)
-            {
+            for(int k=0;k<a;k++,j=(j+1)%m)
                 A[i][j]=1;
-                c[j]++;
-                r[i]++;
-                j = (j+1)%m;
-            } 
             
         }
         cout<<"YES"<<endl;
