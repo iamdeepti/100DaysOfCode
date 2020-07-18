@@ -21,70 +21,63 @@ void top(vector<vector<int>> &g,int m,int n,vector<int> &res,int s,vector<bool> 
 void solve()
 {
     int n,m;
-        cin>>n>>m;
-        int x,y,ti;
-        vector<vector<int>> g(n+1);
-        vector<int> indeg(n+1);
-        // vector<int> outdeg(n+1);
-        vector<pii> edge;
-        for(int i=0;i<m;i++)
+    cin>>n>>m;
+    int x,y,ti;
+    vector<vector<int>> g(n+1);
+    vector<int> indeg(n+1);
+    vector<pii> edge;
+    for(int i=0;i<m;i++)
+    {
+        cin>>ti>>x>>y;
+        if(ti==1)
         {
-            cin>>ti>>x>>y;
-            if(ti==1)
+            g[x].pb(y);
+            indeg[y]++;
+        }
+        else{
+            edge.pb(mk(x,y));
+        }
+    }
+    vector<bool> vis(n+1,false);
+    vector<int> res;
+    
+    for(int i=1;i<=n;i++)
+    {
+        if(indeg[i]==0 && !vis[i])
+            top(g,m,n,res,i,vis);
+            
+    }
+    if(res.size()<n){
+        cout<<"NO"<<endl;
+        return;
+    }
+    vector<int> order(n+1);
+    for(int i=n-1;i>=0;i--)
+        order[res[i]] = n-i;
+    for(auto x:edge)
+    {
+        if(order[x.f]<order[x.s])
+            g[x.f].pb(x.s);
+        else
+            g[x.s].pb(x.f);
+    }
+    for(int i=1;i<=n;i++)
+    {
+        for(auto v:g[i])
+        {
+            if(order[i]>order[v])
             {
-                g[x].pb(y);
-                indeg[y]++;
-                // outdeg[x]++;
-            }
-            else{
-                edge.pb(mk(x,y));
+                cout<<"NO"<<endl;
+                return;
             }
         }
-        vector<bool> vis(n+1,false);
-        int i=1;
-        vector<int> res;
-        
-        for(i=1;i<=n;i++)
-        {
-            if(indeg[i]==0 && !vis[i])
-                top(g,m,n,res,i,vis);
-                
-        }
-        if(res.size()<n){
-            cout<<"NO"<<endl;
-            return;
-        }
-        // for(auto x:res)
-        //     cout<<x<<" ";
-        // cout<<endl;
-        cout<<"YES"<<endl;
-        for(auto p:edge)
-        {
-            for(int i=n-1;i>=0;i--)
-            {
-                if(p.f==res[i])
-                {
-                     g[res[i]].pb(p.s);
-                    // cout<<res[i]<<" "<<p.s<<endl;
-                    break;
-                }
-                else if(p.s==res[i])
-                {
-                     g[res[i]].pb(p.f);
-                    // cout<<res[i]<<" "<<p.f<<endl;
-                    break;
-                }
-            }
-        }
-        
-        for(int i=1;i<=n;i++)
-        {
-            for(auto v:g[i])
-            {
-                cout<<i<<" "<<v<<endl;
-            }
-        }
-
+    }
+    cout<<"YES"<<endl;
+    for(int i=1;i<=n;i++)
+    {
+        for(auto v:g[i])
+            cout<<i<<" "<<v<<endl;
+    }
 }
 int main()
 {
