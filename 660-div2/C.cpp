@@ -10,17 +10,43 @@ using namespace std;
 #define pb push_back
 #define mk make_pair
 #define vi vector<int>
+vi p,a,h,go;
+vector<vi> g;
+bool access=true;
+void dfs(int s,int ancestor)
+{
+    a[s] = p[s];
+    int sum_g=0;
+    for(auto x:g[s])
+    {
+        if(x==ancestor)
+            continue;
+        dfs(x,s);
+        a[s] += a[x];
+        sum_g += go[x];
+    }
+    go[s] = (a[s]+h[s]);
+    if(go[s]&1)
+        access = false;
+    go[s] = go[s]/2;
+    if(go[s]<0 || go[s]>a[s])
+        access = false;
+    if(sum_g>go[s])
+        access = false;
+}
 void solve()
 {
     int n,m;
     cin>>n>>m;
-    vi p(n);
+    access = true;
+    a.clear();p.clear();go.clear();h.clear();
+    a.resize(n);p.resize(n);g.resize(n);h.resize(n);go.resize(n);
     for(int i=0;i<n;i++)
         cin>>p[i];
-    vi h(n);
+    
     for(int i=0;i<n;i++)
         cin>>h[i];
-    vector<vi> g(n);
+
     int x,y;
     for(int i=0;i<n-1;i++)
     {
@@ -29,13 +55,10 @@ void solve()
         g[x].pb(y);
         g[y].pb(x);
     }
-    vi c(n);
-    bool go(n);
-    for(int i=0;i<n;i++)
-    {
-        if(h[i]>0 && !go(i))
-            bfs()
-    }
+    dfs(0,-1);
+    for(int i=0;i<n;i++)    g[i].clear();
+    g.clear();
+    cout<<((access)?"YES":"NO")<<endl;
 }
 int main()
 {
