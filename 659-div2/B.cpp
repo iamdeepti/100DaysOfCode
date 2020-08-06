@@ -17,6 +17,7 @@ void solve()
     vi d(n);
     for(int i=0;i<n;i++)
         cin>>d[i];
+        
 }
 int main()
 {
