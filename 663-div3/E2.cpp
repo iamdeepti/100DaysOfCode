@@ -10,7 +10,7 @@ using namespace std;
 #define vi vector<int>
 vector<vector<pii>> g;
 int ans=0;
-vi cnt,w;
+vi cnt,w,c;
 struct comp{
     bool operator() (pii a,pii b) const{
         if(a.f == b.f)
@@ -42,31 +42,48 @@ void solve()
     ll S;
     cin>>n>>S;
     g = vector<vector<pii>> (n);
-    cnt = w = vi(n-1);
+    cnt = w = c = vi(n-1);
     for(int i=0;i<n-1;i++)
     {
-        cin>>x>>y>>w[i];
+        cin>>x>>y>>w[i]>>c[i];
         x--;y--;
         g[x].pb(mk(y,i));
         g[y].pb(mk(x,i));
     }
     dfs(0);
-    set<pair<ll,int>,comp> st;
+    set<pair<ll,int>,comp> one,two;
     ll curr=0;
     for(int i=0;i<n-1;i++)
     {
-        st.insert({getdiff(i),i});
+        if(c[i]==1)
+            one.insert({getdiff(i),i});
+        else
+            two.insert({getdiff(i),i});
         curr += w[i]*1ll*cnt[i];
     }
     int ans=0;
     while(curr>S)
     {
-        int i = (st.begin()->s);
-        st.erase(st.begin());
-        curr -= getdiff(i);
-        w[i]/=2;
-        st.insert({getdiff(i),i});
-        ans++;
+        auto i = *(one.begin());
+        auto j = *two.begin();
+        int temp = w[i.s];
+        w[i.s]/=2;
+        if(getdiff(i.s)+i.f >= j.f)
+        {
+            one.erase(one.begin());
+            ans +=1;
+            curr -= i.f;
+            one.insert({getdiff(i.s),i.s});
+        }
+        else{
+            two.erase(two.begin());
+            w[i.s] = temp;
+            w[j.s]/=2;
+            curr -= j.f;
+            two.insert({getdiff(j.s),j.s});
+            ans += 2;
+        }
+        
     }
     cout<<ans<<endl;
 }
