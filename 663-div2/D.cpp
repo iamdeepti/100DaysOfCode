@@ -105,6 +105,11 @@ void solve()
         cout<<"-1"<<endl;
         return;
     }
+    if(n==1)
+    {    
+        cout<<0<<endl;
+        return;
+    }
     string s;
     for(int i=0;i<n;i++)
     {
