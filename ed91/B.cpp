@@ -21,14 +21,14 @@ void solve()
         if(str[i]=='S')   s++;
         if(str[i]=='P')   p++;
     }
-    if(r>s && r>p)
+    if(r>=s && r>=p)
     {
         for(int i=0;i<n;i++)
             cout<<"P";
         cout<<endl;
         return;
     }
-    if(s>r && s>p)
+    if(s>=r && s>=p)
     {
         for(int i=0;i<n;i++)
             cout<<"R";
