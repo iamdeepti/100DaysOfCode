@@ -12,29 +12,26 @@ using namespace std;
 #define vi vector<int>
 void solve()
 {
-    int n,k;
-    cin>>n>>k;
-    vi a(n);
-    int j=-1,ans=INT_MAX;
-    for(int i=0;i<n;i++)
-    {    cin>>a[i];
-        if(k%a[i]==0 && ans>k/a[i])
+    int n,m;    cin>>n>>m;
+    vi a(n), b(m);
+    for(int i=0;i<n;i++)    cin>>a[i];
+    for(int i=0;i<m;i++)    cin>>b[i];
+    int i=0,j=0;
+    while(i<n && j<m)
+    {
+        if(a[i]==b[j])
         {
-            ans = k/a[i];
-            j = a[i];
+            i++;j++;
         }
+        else
+            i++;
     }
-    cout<<j<<endl;
+    
 }
 int main()
 {
     ios_base:: sync_with_stdio(false);
     cin.tie(NULL); cout.tie(NULL);
-    int t;
-    cin>>t;
-    while(t--)
-    {
-        solve();
-    }
+    solve();
     return 0;
 }

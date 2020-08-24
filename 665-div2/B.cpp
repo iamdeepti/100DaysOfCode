@@ -12,19 +12,14 @@ using namespace std;
 #define vi vector<int>
 void solve()
 {
-    int n,k;
-    cin>>n>>k;
-    vi a(n);
-    int j=-1,ans=INT_MAX;
-    for(int i=0;i<n;i++)
-    {    cin>>a[i];
-        if(k%a[i]==0 && ans>k/a[i])
-        {
-            ans = k/a[i];
-            j = a[i];
-        }
-    }
-    cout<<j<<endl;
+    ll x1,y1,z1,x2,y2,z2;
+    cin>>x1>>y1>>z1>>x2>>y2>>z2;
+    ll two = min(z1,y2);
+    // ll zero = (min(x1,x2)+min(y1,y2-two)+min(z1,z2-two)+)
+    ll neg = min(y1-min(y1,y2+x2-two),z2-min(z2,z1+x1-two));
+    // ll neg = min(y1-min(y1,min(y1,y2)+min(y1,-min(y1,x2)+x2)),z2-min(z2,z1+x1-two));
+    
+    cout<<2*two-2*neg<<endl;
 }
 int main()
 {

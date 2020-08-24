@@ -9,6 +9,22 @@ using namespace std;
 #define pii pair<int,int>
 #define pb push_back
 #define mk make_pair
+#define vi vector<int>
+int solve()
+{
+    int n,k;
+    cin>>n>>k;
+    if(k==n)
+        return 0;
+    if(k==0 && n==1)
+        return 1;
+    if(k>n)
+        return k-n;
+    if(abs(n-k)&1)
+        return 1;
+    else
+        return 0;
+}
 int main()
 {
     ios_base:: sync_with_stdio(false);
@@ -17,17 +33,7 @@ int main()
     cin>>t;
     while(t--)
     {
-        int n;
-        cin>>n;
-        vector<int> a(2*n);
-        vector<bool> vis(n+1,false);
-        for(int i=0;i<2*n;i++)
-        {    cin>>a[i];
-            if(!vis[a[i]])
-                cout<<a[i]<<" ";
-            vis[a[i]]=true;
-        }
-        cout<<endl;
+        cout<<solve()<<endl;
     }
     return 0;
 }
