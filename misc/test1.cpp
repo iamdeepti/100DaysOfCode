@@ -1,46 +1,79 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-#define ll long long
+#define int long long
 #define f first
 #define s second
 #define pb push_back
 #define mk make_pair
 #define pii pair<int,int>
-
-int main()
+vector<int> a;
+int curr[401]={0},next_pos[401]={0},dp[201]={0};
+int curr2[401]={0};
+struct comp
 {
-    string str;
-    cin>>str;
-    int n = str.length();
-    string temp = str;
-    sort(temp.begin(),temp.end());
-    stack<char> st;
-    int j=0;
-    int cnt[26]={0};
-    for(auto ch:str) cnt[ch-'a']++;
-    cout<<temp<<endl;
-    for(int i=0;i<n;i++)
-    {
-        if(str[i]==temp[j])
-        {
-            cout<<str[i];
-            j++;
-            continue;
-        }
-        while(!st.empty() && st.top()==temp[j])
-        {
-            cout<<st.top();
-            st.pop();
-            j++;
-        }
-        st.push(str[i]);
+    bool operator() (int i,int j) const{
+        if(i==j)  return false;
+        if(curr2[i]==curr2[j])    return i<j;
+        return curr2[i]>curr2[j];
     }
-    while(!st.empty())
+};
+
+void solve()
+{
+    int n,m;
+    cin>>n>>m;
+
+    a.resize(m);
+    memset(next_pos,0,sizeof(next_pos));
+    memset(curr,0,sizeof(curr));
+    for(int i=0;i<m;i++)
     {
-        cout<<st.top();
-        st.pop();
+        cin>>a[i];
     }
-    cout<<endl;
+    for(int i=m-1;i>=0;i--)
+    {
+            next_pos[a[i]] = curr[a[i]];
+        curr[a[i]] = i;
+        dp[i] = next_pos[a[i]];
+        if(!dp[i])
+            dp[i] = m+1;
+    }
+    set<int,comp> st;
+    int ans=0;
+    for(int i=0;i<m;i++)
+    {
+        if(st.find(a[i])==st.end())
+        {
+            if(st.size()<n)
+            {
+                curr2[a[i]] = dp[i];
+                st.insert(a[i]);
+            }
+            else{
+                st.erase(st.begin());
+                curr2[a[i]] = dp[i];
+                st.insert(a[i]);
+                
+            }
+            ans++;
+        }
+        else if(curr2[a[i]]!=dp[i]){
+            st.erase(a[i]);
+            curr2[a[i]] = dp[i];
+            st.insert(a[i]);
+        }
+    }
+    cout<<ans<<endl;
+    a.clear();
+}
+
+int32_t main()
+{
+    int t;	cin>>t;
+    while(t--)
+    {
+        solve();
+    }
     return 0;
 }
