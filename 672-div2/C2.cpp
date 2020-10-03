@@ -7,64 +7,81 @@ using namespace std;
 #define pb push_back
 #define mk make_pair
 #define pii pair<int,int>
+vector<int> a;
+void erase(int i,  int &res)
+{
+    if(a[i]<a[i+1] && a[i]<a[i-1])  res += a[i];
+    if(a[i]>a[i+1] && a[i]>a[i-1])  res -= a[i];
+    // cout<<"erased "<<a[i]<<" ";
+    // cout<<res<<endl;
+}
+void insert(int i,  int &res)
+{
+    if(a[i]<a[i+1] && a[i]<a[i-1])  res -= a[i];
+    if(a[i]>a[i+1] && a[i]>a[i-1])  res += a[i];
+    // cout<<"inserted "<<a[i]<<" ";
+    // cout<<res<<endl;
+}
+
 bool minima(int i, vector<int> &a)
 {
-    int n = a.size();
-    int prev = (i>=1)?a[i-1]:-1e9;
-    int next = (i<n-1)?a[i+1]:-1e9;
-    if(a[i]<prev && a[i]<next)
+    if(a[i]<a[i+1] && a[i]<a[i-1])
         return true;
     return false;
 }
 bool maxima(int i, vector<int> &a)
 {
-    int n = a.size();
-    int prev = (i>=1)?a[i-1]:-1e9;
-    int next = (i<n-1)?a[i+1]:-1e9;
-    if(a[i]>prev && a[i]>next)
+    if(a[i]>a[i+1] && a[i]>a[i-1])
         return true;
     return false;
 }
 void solve()
 {
     int n,q; cin>>n>>q;
-    vector<int> a(n),b(n);
-    for(int i=0;i<n;i++)
+    a.resize(n+4);
+    for(int i=2;i<=n+1;i++)
         cin>>a[i];
-    int i=0, k =0,sz=0;
+    int i=2, k =0,sz=0;
     int ans=0,res=0;
-    while(i<n)
+    
+    while(i<=n+1)
     {
-        if(!k) // choose maxima
+        if(maxima(i,a))
         {
-            while(i+1<n && a[i+1]>=a[i]) i++;
-            b[i] = 1;
-            ans += a[i];
-            sz++;
+            
+            // cout<<a[i]<<" is maxima"<<endl;
+            res += a[i];
         }
-        else
+        else if(minima(i,a))
         {
-            while(i+1<n && a[i+1]<=a[i]) i++;
-            b[i] = -1;
-            ans -= a[i];
-            sz++;
+            
+            // cout<<a[i]<<" is minima"<<endl;
+            res -= a[i];
         }
-        res = max(ans,res);
+        
         i++;
-        k = k^1;
     }
+    cout<<res<<endl;
     while(q--)
     {
         int l,r;
         cin>>l>>r;
-        l--; r--;
-        res = res - b[l]*a[l] -b[r]*a[r];
+        l++;r++;
+        // l--; r--;
+        erase(l-1,res);erase(l+1,res);erase(l,res);
+        if(r-1 >l+1)    erase(r-1,res);
+        if(r+1 > l+1)   erase(r+1,res);
+        if(r> l+1)  erase(r,res);
+        
         swap(a[l],a[r]);
-        if(minima(l,a))
-        {
-
-        }
+        insert(l-1,res);insert(l+1,res);insert(l,res);
+        
+        if(r-1>l+1)    insert(r-1,res);
+        if(r+1>l+1)    insert(r+1,res);
+        if(r>l+1)   insert(r,res);
+        cout<<res<<endl;
     }
+    a.clear();
 }
 
 int32_t main()

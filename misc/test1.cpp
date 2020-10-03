@@ -7,65 +7,50 @@ using namespace std;
 #define pb push_back
 #define mk make_pair
 #define pii pair<int,int>
-vector<int> a;
-int curr[401]={0},next_pos[401]={0},dp[201]={0};
-int curr2[401]={0};
-struct comp
-{
-    bool operator() (int i,int j) const{
-        if(i==j)  return false;
-        if(curr2[i]==curr2[j])    return i<j;
-        return curr2[i]>curr2[j];
-    }
-};
-
 void solve()
 {
-    int n,m;
-    cin>>n>>m;
+    int n; cin>>n;
+    vector<int> D(n),pre(n+1);
+    for(int i=0;i<n;i++)
+    {
+        cin>>D[i];
+        pre[i+1] = D[i] + pre[i];
+    }
+    vector<int> maxStart(n),maxEnd(n),minStart(n),minEnd(n);
+    maxEnd[0]=D[0]; minEnd[0] = D[0];
+    maxStart[n-1]=D[n-1]; minStart[n-1] = D[n-1];
 
-    a.resize(m);
-    memset(next_pos,0,sizeof(next_pos));
-    memset(curr,0,sizeof(curr));
-    for(int i=0;i<m;i++)
+    for(int i=1;i<n;i++)
     {
-        cin>>a[i];
+        maxEnd[i] = max(maxEnd[i-1]+D[i],D[i]);
+        minEnd[i] = min(minEnd[i-1]+D[i],D[i]);
     }
-    for(int i=m-1;i>=0;i--)
+    for(int i=n-2;i>=0;i--)
     {
-            next_pos[a[i]] = curr[a[i]];
-        curr[a[i]] = i;
-        dp[i] = next_pos[a[i]];
-        if(!dp[i])
-            dp[i] = m+1;
+        maxStart[i] = max(maxStart[i+1]+D[i],D[i]);
+        minStart[i] = min(minStart[i+1]+D[i],D[i]);
     }
-    set<int,comp> st;
-    int ans=0;
-    for(int i=0;i<m;i++)
+    vector<int> softMaxStart(n),softMaxEnd(n),softMinStart(n),softMinEnd(n);
+    softMaxEnd[0]=D[0]; softMinEnd[0] = D[0];
+    softMaxStart[n-1]=D[n-1]; softMinStart[n-1] = D[n-1];
+    
+    for(int i=1;i<n;i++)
     {
-        if(st.find(a[i])==st.end())
-        {
-            if(st.size()<n)
-            {
-                curr2[a[i]] = dp[i];
-                st.insert(a[i]);
-            }
-            else{
-                st.erase(st.begin());
-                curr2[a[i]] = dp[i];
-                st.insert(a[i]);
-                
-            }
-            ans++;
-        }
-        else if(curr2[a[i]]!=dp[i]){
-            st.erase(a[i]);
-            curr2[a[i]] = dp[i];
-            st.insert(a[i]);
-        }
+        softMaxEnd[i] = max(softMaxEnd[i-1],maxEnd[i]);
+        softMinEnd[i] = min(softMinEnd[i-1],minEnd[i]);
     }
-    cout<<ans<<endl;
-    a.clear();
+    for(int i=n-2;i>=0;i--)
+    {
+        softMaxStart[i] = max(softMaxStart[i+1],maxStart[i]);
+        softMinStart[i] = min(softMinStart[i+1],minStart[i]);
+    }
+    int res = -1e9;
+    for(int i=0;i+1<n;i++)
+    {
+       
+        res = max(max(softMaxEnd[i]-softMinStart[i+1],softMaxStart[i+1]-softMinEnd[i]),res);
+    }
+    cout<<res<<endl;
 }
 
 int32_t main()

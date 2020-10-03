@@ -53,12 +53,8 @@ void solve()
         }
         
     }
-    // for(auto u: curr)
-    //     cout<<dolls[u].f<<" "<<dolls[u].s<<"\t";
-    // cout<<endl;
     cout<<curr.size()<<endl;
-    // dolls.clear();
-    // curr.clear();
+    
 }
 
 int32_t main()
