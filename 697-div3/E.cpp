@@ -1,10 +1,8 @@
-/*
-* Author - Deepti Singh
-* Created: 4 Jan 21, Monday   08:53:50 pm
-* Last modified: 5 Jan 21, Tuesday   01:05:37 pm
-* Institution - DTU
-* email - iamdeepti956@gmail.com
-*/
+// Author - Deepti Singh
+// Created: 30 Jan 21, Saturday   11:16:26 am
+// Last modified: 30 Jan 21, Saturday   12:37:53 pm
+// Institution - DTU
+// email - iamdeepti956@gmail.com
 #include <bits/stdc++.h>
 using namespace std;
  
@@ -26,8 +24,15 @@ using namespace std;
 #define print(a)		for(auto x:a) cout<<x<<" ";	cout<<endl
 #define Print(a,s,e)	for(int i=s; i<e; i++) cout<<a[i]<<" ";	  cout<<endl 
 #define bug(...)        __f (#__VA_ARGS__, __VA_ARGS__)
- 
 
+int pow(int a, int m, int mod)
+{
+    if(m==0)    return 1;
+    if(m==1)    return a%mod;
+    int res = pow(a,m/2,mod);
+    if(m&1) return (((res*res)%mod ) *a)%mod;
+    return (res*res)%mod;
+}
 template <typename Arg1>
 void __f (const char* name, Arg1&& arg1) { cout << name << " : " << arg1 << endl; }
 template <typename Arg1, typename... Args>
@@ -36,45 +41,55 @@ void __f (const char* names, Arg1&& arg1, Args&&... args)
     const char* comma = strchr (names + 1, ',');
     cout.write (names, comma - names) << " : " << arg1 << " | "; __f (comma + 1, args...);
 }
+const int N = 1e3+1;
+int mod = 1e9 +7;
+int fact[N], ifact[N];
+int C(int n,int r, int mod)
+{
+    return (fact[n]*((ifact[n-r]*ifact[r])%mod))%mod;
+}
+void FACT(int * fact, int n, int mod)
+{
+    fact[0]=1;
+    loop(i,1,n) fact[i] = (fact[i-1]*i)%mod;
+}
+void INVFACT(int * ifact, int n, int mod)
+{
+    ifact[0]=1;
+    loop(i,1,n) ifact[i] = (ifact[i-1]*pow(i,mod-2,mod))%mod;
+}
+
+int freq[1001], r[N];
 void solve()
 {
-    int n; cin>>n; 
-    int h,w;
-    vector<vi> a;
-    loop(i,0,n)
-    {
-        cin>>h>>w;
-        a.pb({min(h,w),max(h,w),i+1});
-    }
+    int n, k; cin>>n>>k;
+    vi a(n);
+    loop(i,0,n) cin>>a[i];
     sort(all(a));
-    set<vi> st; 
-    vi ans(n);
-    int curr = 0;
-    loop(i,0,n)
+    mset(freq,0); mset(r,0);
+    loop(i,0,n)   freq[a[i]]++;
+    int ans = 1;
+    set<int> st;
+    loop(i,n-k,n)
     {
-        while(a[curr][0]<a[i][0])
-            st.insert({a[curr][1],a[curr][2]}), curr++;
-        if(st.empty())
-            ans[a[i][2]-1] = -1;
-        else
-        {
-            vi tmp = *st.begin();
-            if(tmp[0]<a[i][1])
-                ans[a[i][2]-1] = tmp[1];
-            else
-            {
-                ans[a[i][2]-1] = -1;
-            }
-            
-        } 
+        r[a[i]]++;
+        st.insert(a[i]);
     }
-    print(ans);
+    for(auto x:st)
+    {
+        ans = (ans * C(freq[x],r[x],mod))%mod;
+    }
+    cout<<ans<<endl;
 }
 int32_t main()
 {
     ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
     int t = 1;
     cin >> t;
+    FACT(fact,N,mod);   INVFACT(ifact,N,mod);
     while (t--) solve();
     return 0;
 }
+
+
+

@@ -1,10 +1,8 @@
-/*
-* Author - Deepti Singh
-* Created: 4 Jan 21, Monday   08:53:50 pm
-* Last modified: 5 Jan 21, Tuesday   01:05:37 pm
-* Institution - DTU
-* email - iamdeepti956@gmail.com
-*/
+// Author - Deepti Singh
+// Created: 15 Jan 21, Friday   01:00:15 pm
+// Last modified: 24 Jan 21, Sunday   01:28:51 pm
+// Institution - DTU
+// email - iamdeepti956@gmail.com
 #include <bits/stdc++.h>
 using namespace std;
  
@@ -38,37 +36,19 @@ void __f (const char* names, Arg1&& arg1, Args&&... args)
 }
 void solve()
 {
-    int n; cin>>n; 
-    int h,w;
-    vector<vi> a;
-    loop(i,0,n)
+    int n, k; 
+    cin>>n>>k;
+    int m = n-k;
+    // bug(m,n,k,k-m);
+    loop(i,0,k-m-1)
+        cout<<i+1<<" ";
+    int p = k;
+    loop(i,k-m-1,k)
     {
-        cin>>h>>w;
-        a.pb({min(h,w),max(h,w),i+1});
+        cout<<p<<" ";
+        p--;
     }
-    sort(all(a));
-    set<vi> st; 
-    vi ans(n);
-    int curr = 0;
-    loop(i,0,n)
-    {
-        while(a[curr][0]<a[i][0])
-            st.insert({a[curr][1],a[curr][2]}), curr++;
-        if(st.empty())
-            ans[a[i][2]-1] = -1;
-        else
-        {
-            vi tmp = *st.begin();
-            if(tmp[0]<a[i][1])
-                ans[a[i][2]-1] = tmp[1];
-            else
-            {
-                ans[a[i][2]-1] = -1;
-            }
-            
-        } 
-    }
-    print(ans);
+    cout<<endl;
 }
 int32_t main()
 {
@@ -76,5 +56,9 @@ int32_t main()
     int t = 1;
     cin >> t;
     while (t--) solve();
+
     return 0;
 }
+
+
+

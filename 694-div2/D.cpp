@@ -1,10 +1,8 @@
-/*
-* Author - Deepti Singh
-* Created: 4 Jan 21, Monday   08:53:50 pm
-* Last modified: 5 Jan 21, Tuesday   01:05:37 pm
-* Institution - DTU
-* email - iamdeepti956@gmail.com
-*/
+// Author - Deepti Singh
+// Created: 5 Jan 21, Tuesday   09:16:12 pm
+// Last modified: 6 Jan 21, Wednesday   11:47:25 am
+// Institution - DTU
+// email - iamdeepti956@gmail.com
 #include <bits/stdc++.h>
 using namespace std;
  
@@ -36,45 +34,79 @@ void __f (const char* names, Arg1&& arg1, Args&&... args)
     const char* comma = strchr (names + 1, ',');
     cout.write (names, comma - names) << " : " << arg1 << " | "; __f (comma + 1, args...);
 }
+const int N = 1e3+1;
+bool prime[N];
+vi pr;
 void solve()
 {
-    int n; cin>>n; 
-    int h,w;
-    vector<vi> a;
+    int n; cin>>n;
+    int a;
+    map<int,int> mp;
     loop(i,0,n)
     {
-        cin>>h>>w;
-        a.pb({min(h,w),max(h,w),i+1});
+        cin>>a;
+        for(int x:pr)
+        {
+            if(x*x>a)    break;
+            if(a%x)  continue;
+            int cnt = 0;
+            while(a%x==0)
+            {
+                a = a/x;
+                cnt++;
+            }
+            if(cnt&1)
+                a*=x;
+        }
+        mp[a]++;
     }
-    sort(all(a));
-    set<vi> st; 
-    vi ans(n);
-    int curr = 0;
-    loop(i,0,n)
+    int sumEven = 0, maxodd = 0, maxeven = 0,ans = 0;
+    for(auto x:mp)
     {
-        while(a[curr][0]<a[i][0])
-            st.insert({a[curr][1],a[curr][2]}), curr++;
-        if(st.empty())
-            ans[a[i][2]-1] = -1;
+        if((x.ss&1)&& x.ff!=1)
+        {
+            maxodd = max(maxodd,x.ss);
+        }
         else
         {
-            vi tmp = *st.begin();
-            if(tmp[0]<a[i][1])
-                ans[a[i][2]-1] = tmp[1];
-            else
-            {
-                ans[a[i][2]-1] = -1;
-            }
-            
-        } 
+            sumEven += x.ss;
+            maxeven = max(maxeven,x.ss);
+        }
+        ans = max(x.ss,ans);
     }
-    print(ans);
+    int q; cin>>q;
+    while(q--)
+    {
+        int w; cin>>w;
+        if(!w)
+        {
+            cout<<ans<<endl;
+        }
+        else
+        {
+            cout<<max(maxodd,sumEven)<<endl;
+        }
+    }
 }
 int32_t main()
 {
     ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
     int t = 1;
     cin >> t;
+    mset(prime,true);
+    loop(i,2,N)
+    {
+        if(prime[i])
+        {
+            pr.pb(i);
+            for(int j=i*i;j<N;j+=i)
+                prime[j]=false;
+        }
+    }
     while (t--) solve();
+
     return 0;
 }
+
+
+

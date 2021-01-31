@@ -1,10 +1,8 @@
-/*
-* Author - Deepti Singh
-* Created: 4 Jan 21, Monday   08:53:50 pm
-* Last modified: 5 Jan 21, Tuesday   01:05:37 pm
-* Institution - DTU
-* email - iamdeepti956@gmail.com
-*/
+// Author - Deepti Singh
+// Created: 5 Jan 21, Tuesday   08:34:53 pm
+// Last modified: 5 Jan 21, Tuesday   08:48:23 pm
+// Institution - DTU
+// email - iamdeepti956@gmail.com
 #include <bits/stdc++.h>
 using namespace std;
  
@@ -38,37 +36,22 @@ void __f (const char* names, Arg1&& arg1, Args&&... args)
 }
 void solve()
 {
-    int n; cin>>n; 
-    int h,w;
-    vector<vi> a;
+    int n,m;    cin>>n>>m;
+    vi k(n), c(m);
+    loop(i,0,n) cin>>k[i];
+    loop(i,0,m) cin>>c[i];
+    sort(all(k));
+    reverse(all(k));
+    int j = 0;
+    int ans = 0, sum = 0;
     loop(i,0,n)
     {
-        cin>>h>>w;
-        a.pb({min(h,w),max(h,w),i+1});
-    }
-    sort(all(a));
-    set<vi> st; 
-    vi ans(n);
-    int curr = 0;
-    loop(i,0,n)
-    {
-        while(a[curr][0]<a[i][0])
-            st.insert({a[curr][1],a[curr][2]}), curr++;
-        if(st.empty())
-            ans[a[i][2]-1] = -1;
+        if(j==n || k[i]-1<j)
+            sum += c[k[i]-1];
         else
-        {
-            vi tmp = *st.begin();
-            if(tmp[0]<a[i][1])
-                ans[a[i][2]-1] = tmp[1];
-            else
-            {
-                ans[a[i][2]-1] = -1;
-            }
-            
-        } 
+            sum += c[j], j++;
     }
-    print(ans);
+    cout<<sum<<endl;
 }
 int32_t main()
 {
@@ -76,5 +59,9 @@ int32_t main()
     int t = 1;
     cin >> t;
     while (t--) solve();
+
     return 0;
 }
+
+
+

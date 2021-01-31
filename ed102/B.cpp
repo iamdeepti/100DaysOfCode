@@ -1,10 +1,8 @@
-/*
-* Author - Deepti Singh
-* Created: 4 Jan 21, Monday   08:53:50 pm
-* Last modified: 5 Jan 21, Tuesday   01:05:37 pm
-* Institution - DTU
-* email - iamdeepti956@gmail.com
-*/
+// Author - Deepti Singh
+// Created: 15 Jan 21, Friday   12:28:31 pm
+// Last modified: 23 Jan 21, Saturday   05:19:34 pm
+// Institution - DTU
+// email - iamdeepti956@gmail.com
 #include <bits/stdc++.h>
 using namespace std;
  
@@ -36,39 +34,34 @@ void __f (const char* names, Arg1&& arg1, Args&&... args)
     const char* comma = strchr (names + 1, ',');
     cout.write (names, comma - names) << " : " << arg1 << " | "; __f (comma + 1, args...);
 }
+string times(string s, int x)
+{
+    int k = 0;
+    string res;
+    loop(i,0,x)
+    {
+        res.pb(s[k]);
+        k = (k+1)%sz(s);
+    }
+    return res;
+}
 void solve()
 {
-    int n; cin>>n; 
-    int h,w;
-    vector<vi> a;
+    string s, t;
+    cin>>s>>t;
+    int n = (sz(s)*sz(t))/__gcd(sz(s),sz(t));
+    string x = times(s,n);
+    string y = times(t,n);
+    // bug(x,y);
     loop(i,0,n)
     {
-        cin>>h>>w;
-        a.pb({min(h,w),max(h,w),i+1});
-    }
-    sort(all(a));
-    set<vi> st; 
-    vi ans(n);
-    int curr = 0;
-    loop(i,0,n)
-    {
-        while(a[curr][0]<a[i][0])
-            st.insert({a[curr][1],a[curr][2]}), curr++;
-        if(st.empty())
-            ans[a[i][2]-1] = -1;
-        else
+        if(x[i]!=y[i])
         {
-            vi tmp = *st.begin();
-            if(tmp[0]<a[i][1])
-                ans[a[i][2]-1] = tmp[1];
-            else
-            {
-                ans[a[i][2]-1] = -1;
-            }
-            
-        } 
+            cout<<"-1"<<endl;
+            return;
+        }
     }
-    print(ans);
+    cout<<x<<endl;
 }
 int32_t main()
 {
@@ -76,5 +69,9 @@ int32_t main()
     int t = 1;
     cin >> t;
     while (t--) solve();
+
     return 0;
 }
+
+
+

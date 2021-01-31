@@ -1,10 +1,8 @@
-/*
-* Author - Deepti Singh
-* Created: 4 Jan 21, Monday   08:53:50 pm
-* Last modified: 5 Jan 21, Tuesday   01:05:37 pm
-* Institution - DTU
-* email - iamdeepti956@gmail.com
-*/
+// Author - Deepti Singh
+// Created: 5 Jan 21, Tuesday   05:29:15 pm
+// Last modified: 7 Jan 21, Thursday   08:03:48 pm
+// Institution - DTU
+// email - iamdeepti956@gmail.com
 #include <bits/stdc++.h>
 using namespace std;
  
@@ -38,37 +36,36 @@ void __f (const char* names, Arg1&& arg1, Args&&... args)
 }
 void solve()
 {
-    int n; cin>>n; 
-    int h,w;
-    vector<vi> a;
-    loop(i,0,n)
+    int n, m;   cin>>n>>m;
+    vi a(n), b(m);
+    loop(i,0,n) cin>>a[i];
+    loop(i,0,m) cin>>b[i];
+    set<int> st,p; 
+    st.insert(0);
+    p.insert(0);
+    while(!st.empty())
     {
-        cin>>h>>w;
-        a.pb({min(h,w),max(h,w),i+1});
-    }
-    sort(all(a));
-    set<vi> st; 
-    vi ans(n);
-    int curr = 0;
-    loop(i,0,n)
-    {
-        while(a[curr][0]<a[i][0])
-            st.insert({a[curr][1],a[curr][2]}), curr++;
-        if(st.empty())
-            ans[a[i][2]-1] = -1;
-        else
+        int x = *st.begin();
+        st.erase(x);
+        loop(i,0,n)
         {
-            vi tmp = *st.begin();
-            if(tmp[0]<a[i][1])
-                ans[a[i][2]-1] = tmp[1];
-            else
+            if(p.find(x|a[i])==p.end())
             {
-                ans[a[i][2]-1] = -1;
+                st.insert(x|a[i]);
+                p.insert(x|a[i]);
             }
-            
-        } 
+        }
+        loop(i,0,m)
+        {
+            if(p.find(x&b[i])==p.end())
+            {
+                st.insert(x&b[i]);
+                p.insert(x&b[i]);
+            }
+        }
     }
-    print(ans);
+    // print(p);
+    cout<<sz(p)<<endl;
 }
 int32_t main()
 {
@@ -76,5 +73,6 @@ int32_t main()
     int t = 1;
     cin >> t;
     while (t--) solve();
+
     return 0;
 }

@@ -1,10 +1,8 @@
-/*
-* Author - Deepti Singh
-* Created: 4 Jan 21, Monday   08:53:50 pm
-* Last modified: 5 Jan 21, Tuesday   01:05:37 pm
-* Institution - DTU
-* email - iamdeepti956@gmail.com
-*/
+// Author - Deepti Singh
+// Created: 25 Jan 21, Monday   01:55:33 pm
+// Last modified: 26 Jan 21, Tuesday   12:08:19 pm
+// Institution - DTU
+// email - iamdeepti956@gmail.com
 #include <bits/stdc++.h>
 using namespace std;
  
@@ -36,39 +34,57 @@ void __f (const char* names, Arg1&& arg1, Args&&... args)
     const char* comma = strchr (names + 1, ',');
     cout.write (names, comma - names) << " : " << arg1 << " | "; __f (comma + 1, args...);
 }
+const int N = 1e6+1;
 void solve()
 {
-    int n; cin>>n; 
-    int h,w;
-    vector<vi> a;
-    loop(i,0,n)
-    {
-        cin>>h>>w;
-        a.pb({min(h,w),max(h,w),i+1});
+    int n; cin>>n;
+    vi a(2*n);
+    unordered_map<int,int> hmap,temp;
+    loop(i,0,2*n) 
+    {  
+        cin>>a[i];
+        hmap[a[i]]++;
     }
     sort(all(a));
-    set<vi> st; 
-    vi ans(n);
-    int curr = 0;
-    loop(i,0,n)
+    int sum = 0, curr = a[2*n-1];
+    hmap[curr]--;
+    rloop(i,2*n-2,0)
     {
-        while(a[curr][0]<a[i][0])
-            st.insert({a[curr][1],a[curr][2]}), curr++;
-        if(st.empty())
-            ans[a[i][2]-1] = -1;
-        else
+        sum  = a[i]+ a[2*n-1];
+        curr = a[2*n-1];
+        temp = hmap;
+        temp[a[i]]--;
+        int j = 2*n-2;
+        vector<pii> res;
+        while(j>=0)
         {
-            vi tmp = *st.begin();
-            if(tmp[0]<a[i][1])
-                ans[a[i][2]-1] = tmp[1];
-            else
-            {
-                ans[a[i][2]-1] = -1;
-            }
             
-        } 
+            if(temp.count(a[j])==0 || temp[a[j]]==0){j--;  continue;}
+            temp[a[j]]--;
+            // bug(curr,j);
+            if(temp.count(curr-a[j])==0 || temp[curr-a[j]]==0)
+            {
+                // bug(a[j],curr-a[j]);
+                break;
+            }
+            temp[curr-a[j]]--;
+            res.pb({a[j],curr-a[j]});
+            curr = max(a[j],curr-a[j]);
+            j--;
+        }
+        if(j==-1)
+        {
+            cout<<"YES"<<endl;
+            cout<<sum<<endl;
+            cout<<sum-a[i]<<" "<<a[i]<<endl;
+            for(auto x:res)
+            {
+                cout<<x.ff<<" "<<x.ss<<endl;
+            }
+            return;
+        }
     }
-    print(ans);
+    cout<<"NO"<<endl;
 }
 int32_t main()
 {
@@ -76,5 +92,9 @@ int32_t main()
     int t = 1;
     cin >> t;
     while (t--) solve();
+
     return 0;
 }
+
+
+

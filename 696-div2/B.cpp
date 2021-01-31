@@ -1,10 +1,8 @@
-/*
-* Author - Deepti Singh
-* Created: 4 Jan 21, Monday   08:53:50 pm
-* Last modified: 5 Jan 21, Tuesday   01:05:37 pm
-* Institution - DTU
-* email - iamdeepti956@gmail.com
-*/
+// Author - Deepti Singh
+// Created: 25 Jan 21, Monday   01:05:14 pm
+// Last modified: 25 Jan 21, Monday   01:46:39 pm
+// Institution - DTU
+// email - iamdeepti956@gmail.com
 #include <bits/stdc++.h>
 using namespace std;
  
@@ -36,45 +34,62 @@ void __f (const char* names, Arg1&& arg1, Args&&... args)
     const char* comma = strchr (names + 1, ',');
     cout.write (names, comma - names) << " : " << arg1 << " | "; __f (comma + 1, args...);
 }
+// vector<vi> divisors(1001);
+vi primes;
 void solve()
 {
-    int n; cin>>n; 
-    int h,w;
-    vector<vi> a;
-    loop(i,0,n)
+    int d; cin>>d;
+    // bug(d);
+    int num1=0, num2=0,i=0;
+    while(num1==0)
     {
-        cin>>h>>w;
-        a.pb({min(h,w),max(h,w),i+1});
-    }
-    sort(all(a));
-    set<vi> st; 
-    vi ans(n);
-    int curr = 0;
-    loop(i,0,n)
-    {
-        while(a[curr][0]<a[i][0])
-            st.insert({a[curr][1],a[curr][2]}), curr++;
-        if(st.empty())
-            ans[a[i][2]-1] = -1;
-        else
+        if(primes[i]>=1+d)
         {
-            vi tmp = *st.begin();
-            if(tmp[0]<a[i][1])
-                ans[a[i][2]-1] = tmp[1];
-            else
-            {
-                ans[a[i][2]-1] = -1;
-            }
-            
-        } 
+            num1 = primes[i];
+            break;
+        }
+        i++;
     }
-    print(ans);
+    
+    while(num2==0)
+    {
+        if(primes[i]>=d+num1)
+        {
+            num2 = primes[i];
+            break;
+        }
+        i++;
+    }
+    // bug(num1,num2);
+    cout<<num1*num2<<endl;
+
 }
 int32_t main()
 {
     ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
     int t = 1;
     cin >> t;
+    
+    
+    const int n = 1e5+1;
+    bool isprime[n];
+    mset(isprime,true);
+    loop(i,2,n)
+    {
+        if(isprime[i])
+        {
+            primes.pb(i);
+            for(int j=i*i; j<n;j+=i)
+            {
+                isprime[j] = false;
+            }
+        }
+    }
+    // print(primes);
     while (t--) solve();
+
     return 0;
 }
+
+
+

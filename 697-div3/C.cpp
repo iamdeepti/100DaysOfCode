@@ -1,10 +1,8 @@
-/*
-* Author - Deepti Singh
-* Created: 4 Jan 21, Monday   08:53:50 pm
-* Last modified: 5 Jan 21, Tuesday   01:05:37 pm
-* Institution - DTU
-* email - iamdeepti956@gmail.com
-*/
+// Author - Deepti Singh
+// Created: 27 Jan 21, Wednesday   08:45:51 pm
+// Last modified: 27 Jan 21, Wednesday   11:44:22 pm
+// Institution - DTU
+// email - iamdeepti956@gmail.com
 #include <bits/stdc++.h>
 using namespace std;
  
@@ -36,39 +34,25 @@ void __f (const char* names, Arg1&& arg1, Args&&... args)
     const char* comma = strchr (names + 1, ',');
     cout.write (names, comma - names) << " : " << arg1 << " | "; __f (comma + 1, args...);
 }
+const int N = 2e5+1;
+int freqa[N],freqb[N];
 void solve()
 {
-    int n; cin>>n; 
-    int h,w;
-    vector<vi> a;
-    loop(i,0,n)
+    int a,b,k; cin>>a>>b>>k;
+    vector<pii> p(k);
+    mset(freqa,0); mset(freqb,0);
+    loop(i,0,k) cin>>p[i].ff;
+    loop(i,0,k) cin>>p[i].ss;
+    for(auto x:p)
     {
-        cin>>h>>w;
-        a.pb({min(h,w),max(h,w),i+1});
+        freqa[x.ff]++; freqb[x.ss]++;
     }
-    sort(all(a));
-    set<vi> st; 
-    vi ans(n);
-    int curr = 0;
-    loop(i,0,n)
+    int ans = 0;
+    for(auto x:p)
     {
-        while(a[curr][0]<a[i][0])
-            st.insert({a[curr][1],a[curr][2]}), curr++;
-        if(st.empty())
-            ans[a[i][2]-1] = -1;
-        else
-        {
-            vi tmp = *st.begin();
-            if(tmp[0]<a[i][1])
-                ans[a[i][2]-1] = tmp[1];
-            else
-            {
-                ans[a[i][2]-1] = -1;
-            }
-            
-        } 
+        ans += (k-freqa[x.ff]-freqb[x.ss]+1);
     }
-    print(ans);
+    cout<<ans/2<<endl;
 }
 int32_t main()
 {
@@ -76,5 +60,9 @@ int32_t main()
     int t = 1;
     cin >> t;
     while (t--) solve();
+
     return 0;
 }
+
+
+

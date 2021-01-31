@@ -1,10 +1,8 @@
-/*
-* Author - Deepti Singh
-* Created: 4 Jan 21, Monday   08:53:50 pm
-* Last modified: 5 Jan 21, Tuesday   01:05:37 pm
-* Institution - DTU
-* email - iamdeepti956@gmail.com
-*/
+// Author - Deepti Singh
+// Created: 27 Jan 21, Wednesday   08:43:12 pm
+// Last modified: 30 Jan 21, Saturday   11:10:41 am
+// Institution - DTU
+// email - iamdeepti956@gmail.com
 #include <bits/stdc++.h>
 using namespace std;
  
@@ -38,37 +36,48 @@ void __f (const char* names, Arg1&& arg1, Args&&... args)
 }
 void solve()
 {
-    int n; cin>>n; 
-    int h,w;
-    vector<vi> a;
+    int n, m; cin>>n>>m;
+    vector<pii> a(n);
+    loop(i,0,n) cin>>a[i].ff;
+    loop(i,0,n) cin>>a[i].ss;
+    vi one,two;
     loop(i,0,n)
     {
-        cin>>h>>w;
-        a.pb({min(h,w),max(h,w),i+1});
+        if(a[i].ss==1)  one.pb(a[i].ff);
+        else two.pb(a[i].ff);
     }
-    sort(all(a));
-    set<vi> st; 
-    vi ans(n);
-    int curr = 0;
-    loop(i,0,n)
+    sort(all(one)); sort(all(two));
+    int i = sz(one)-1,j=sz(two)-1, ans = 0;
+    while(m>0 && i>=0 && j>=0)
     {
-        while(a[curr][0]<a[i][0])
-            st.insert({a[curr][1],a[curr][2]}), curr++;
-        if(st.empty())
-            ans[a[i][2]-1] = -1;
-        else
+        if(one[i]>=m || (i>=1 && one[i]+one[i-1]>two[j]))
         {
-            vi tmp = *st.begin();
-            if(tmp[0]<a[i][1])
-                ans[a[i][2]-1] = tmp[1];
-            else
-            {
-                ans[a[i][2]-1] = -1;
-            }
-            
-        } 
+            m -= one[i];
+            i--;
+            ans++;
+        }
+        else{
+            m -= two[j];
+            j--;
+            ans += 2;
+        }
     }
-    print(ans);
+    while(m>0 && i>=0)
+    {
+        m -= one[i];
+        i--;
+        ans++;
+    }
+    while(m>0 && j>=0)
+    {
+        m -= two[j];
+        j--;
+        ans+=2;
+    }
+    if(m>0){
+        cout<<-1<<endl; return;
+    }
+    cout<<ans<<endl;
 }
 int32_t main()
 {
@@ -76,5 +85,9 @@ int32_t main()
     int t = 1;
     cin >> t;
     while (t--) solve();
+
     return 0;
 }
+
+
+
